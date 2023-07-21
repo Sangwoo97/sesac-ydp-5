@@ -1,0 +1,31 @@
+/* 하위(후선) 선택자 */
+body section {
+  border: 1px solid blue;
+}
+
+body section h2 {
+  border: 1px solid green;
+}
+
+/* 자식 선택자 */
+.first > h2 {
+  color: white;
+  background-color: navy;
+}
+
+.second > h2 {
+  color: navy;
+  background-color: antiquewhite;
+}
+
+/* 인접 형제 선택자: + 
+    바로 뒤에 있어야지만 적용됨
+*/
+#kong + li {
+  background-color: aqua;
+}
+
+/* 일반 형제 선택자: ~ */
+#kong ~ li {
+  color: red;
+}

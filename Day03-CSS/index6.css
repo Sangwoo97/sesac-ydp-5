@@ -1,0 +1,46 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+div {
+  width: 100px;
+  height: 100px;
+  font-weight: 700;
+  text-align: center;
+  line-height: 100px;
+}
+
+.position-static {
+  background-color: pink;
+  position: static;
+}
+/* relative: 상대위치
+    일반적인 흐름에 따라 배치, top/bottom/left/right 중 하나이상 사용
+*/
+.position-relative {
+  background-color: aquamarine;
+  position: relative;
+  left: 200px;
+}
+/* absolute: 절대 위치
+    - position 속성을 갖는 제일 가까운 조상 기준
+    position속성 갖는 조상이 없다면? -> body를 기준
+*/
+.position-absolute {
+  background-color: gold;
+  position: absolute;
+  top: 50px;
+  left: 50px;
+}
+
+/* fixed: 고정 위치 
+    viewport(브라우저 화면 전체)를 기준으로 특정 위치 배치
+    스크롤 되어도 위치 고정
+*/
+.position-fixed {
+  background-color: coral;
+  position: fixed;
+  top: 0;
+  right: 0;
+}
