@@ -1,0 +1,46 @@
+.ball {
+    position: relative;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: pink;
+
+    animation-name: bounce;
+    animation-duration: 3s;
+    animation-timing-function: linear;
+    animation-iteration-count: 6;
+}
+
+@keyframes bounce {
+    from {
+        top: 0px;
+        bottom: 0px;
+        left: 0px;
+        right: 0px;
+        /* animation-timing-function: ease-out; */
+    }
+    25% {
+        top: 0px;
+        bottom: 0px;
+        left: 200px;
+        right: 0px;
+    }
+    50% {
+        top: 200px;
+        bottom: 0px;
+        left: 200px;
+        right: 0px;
+    }
+    75% {
+        top: 200px;
+        bottom: 0px;
+        left: 0px;
+        right: 0px;
+    }
+    to {
+        top: 0px;
+        bottom: 0px;
+        left: 0px;
+        right: 0px;
+    }
+}
