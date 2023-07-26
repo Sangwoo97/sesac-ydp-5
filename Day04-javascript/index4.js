@@ -44,3 +44,41 @@ console.log(2 > 1); // true
 console.log(2 >= 2); // true
 console.log(2 < 1); // false
 console.log(2 <= 2); // true
+console.log('--------------------');
+
+// 동등연산자 2개 (==) 는 예기치 못한 결과를 발생할수도..!! (자제하자..)
+console.log(1 == '1');
+console.log('0' == false);
+console.log('' == 0);
+console.log(null == undefined);
+console.log('--------------------');
+
+// 논리 연산자
+// !: not (참 -> 거짓, 거짓 -> 참)
+// &&: and (여러 값 중 모두가 참 -> 참)
+// ||: or (여러 값 중 하나라도 참 -> 참)
+console.log(!true);
+console.log(!false);
+console.log(!!true);
+console.log(!!false);
+
+console.log(true && true);
+console.log(true && false);
+console.log(false && false);
+
+console.log(true || true);
+console.log(true || false);
+console.log(false || false);
+
+console.log(!(2 > 1)); // !true -> false
+console.log(2 > 1 && -2 < 1); // true && true -> true
+console.log((2 > 1 && -2 < 1) || 5 > 2);
+// (true && true) || true -> true || true -> true
+
+// 문자열에서 + 연산: 문자열 더하기
+console.log('안녕' + '하세요');
+console.log('12' + '34');
+// 더하기 이외의 연산은 숫자로 자동 형변환 되어 계산이 됨!
+console.log('5' - '2');
+console.log('5' * '2');
+console.log('5' / '2');
