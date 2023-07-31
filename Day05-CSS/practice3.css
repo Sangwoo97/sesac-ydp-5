@@ -1,0 +1,44 @@
+.container {
+    background-color: lightblue;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100px;
+}
+
+p {
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+.img {
+    margin-left: 50px;
+}
+
+@media (min-width: 700px) {
+    .d {
+        display: flex;
+    }
+    .d2 {
+        display: none;
+    }
+}
+
+@media (max-width: 700px) {
+    .img {
+        margin-left: 0px;
+    }
+    .container {
+        justify-content: center;
+        height: 60px;
+    }
+    .d {
+        display: none;
+    }
+    .d2 {
+        background-color: lightcyan;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        text-align: center;
+    }
+}

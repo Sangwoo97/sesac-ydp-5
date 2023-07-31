@@ -1,0 +1,27 @@
+.container {
+    display: flex;
+}
+
+.d {
+    width: 100px;
+    height: 100px;
+    border-radius: 5px;
+    border: 1px solid red;
+}
+
+@media (min-width: 700px) {
+    .d {
+        background-color: black;
+        margin-right: 10px;
+    }
+}
+
+@media (max-width: 700px) {
+    .container {
+        flex-direction: column;
+    }
+    .d {
+        background-color: skyblue;
+        margin-bottom: 10px;
+    }
+}

@@ -1,0 +1,37 @@
+/* body {
+    background-color: skyblue;
+}
+
+.p {
+    background-color: green;
+} */
+
+@media (min-width: 501px) {
+    body {
+        background-color: skyblue;
+    }
+}
+
+@media (max-width: 300px) {
+    body {
+        background-color: orange;
+    }
+}
+
+@media (min-width: 301px) and (max-width: 500) {
+    body {
+        background-color: none;
+    }
+}
+
+@media (max-height: 300px) {
+    .p {
+        font-weight: bold;
+    }
+}
+
+@media (min-height: 500px) {
+    .p {
+        background-color: green;
+    }
+}
