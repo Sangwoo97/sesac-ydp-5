@@ -4,11 +4,14 @@ const PORT = 8080;
 
 app.set('view engine', 'ejs');
 app.set('views', './views');
+// 임시 DB정보
+const idFromDB = 'banana';
+const pwFromDB = '1234qwer';
 
 app.get('/', (req, res) => {
     // res.send('Hello Express !');
 
-    res.render('index');
+    res.render('index', { userId: idFromDB, userPw: pwFromDB, btns: ['버튼1', '버튼2', '버튼3'], isLogin: true });
 });
 
 app.get('/login', (req, res) => {

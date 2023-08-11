@@ -3,14 +3,21 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>메인페이지</title>
+        <%- include('./components/head', { title: '메인' }) %>
     </head>
     <body>
-        <h1>Hello Express !!</h1>
+        <%- include('./components/header') %>
+        <h1>Hello Express <%= userId%></h1>
+        <h1>Your password is <%= userPw%></h1>
         <p>안냐세여</p>
-        <% for(let i = 0; i < 5; i++){ %>
-        <div><%= i%></div>
-        <% } %>
+        <!-- <% for(let btn of btns){ %>
+        <button type="button" class="btn btn-primary"><%= btn%></button>
+        <% } %> -->
+        <%if(isLogin){%>
+        <h4>로그인 완료</h4>
+        <%}else{%>
+        <h4>로그인 안됨</h4>
+        <%}%>
         <a href="./login">로그인</a>
         <a href="./register">회원가입</a>
     </body>
