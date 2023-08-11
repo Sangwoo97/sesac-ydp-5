@@ -2,8 +2,12 @@ const express = require('express');
 const app = express();
 const PORT = 8080;
 
+console.log(__dirname);
 app.set('view engine', 'ejs');
-app.set('views', './views');
+// app.set('views', './views');
+app.use('/views', express.static(__dirname + '/views'));
+app.use('/public', express.static(__dirname + '/static')); // static 미들웨어 등록
+
 // 임시 DB정보
 const idFromDB = 'banana';
 const pwFromDB = '1234qwer';
