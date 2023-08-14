@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>폼</title>
+    </head>
+    <body>
+        <!-- <h1><%= title%></h1>
+        <h2>GET 요청</h2>
+        <form action="/getForm" method="get">
+            <input type="text" placeholder="ID" name="id" />
+            <input type="text" placeholder="PW" name="pw" />
+            <button>제출</button>
+        </form>
+        <h2>POST 요청</h2>
+        <form action="/postForm" method="post">
+            <input type="text" placeholder="ID" name="id" />
+            <input type="text" placeholder="PW" name="pw" />
+            <button>제출</button>
+        </form> -->
+        <form action="/get" method="get">
+            이름<input type="text" name="name" />
+            <div>
+                성별
+                <label> <input type="radio" value="male" name="sex" />남자</label>
+                <label> <input type="radio" value="female" name="sex" />여자</label>
+            </div>
+            <div>
+                생년월일
+                <select name="year" id="y">
+                    <%for(let i = 1980; i < 2024; i++){%>
+                    <option value="<%= i%>"><%= i%></option>
+                    <%}%></select
+                >년
+                <select name="month" id="m">
+                    <%for(let i = 1; i < 13; i++){%>
+                    <option value="<%= i%>"><%= i%></option>
+                    <%}%></select
+                >월
+                <select name="day" id="d">
+                    <%for(let i = 1; i < 31; i++){%>
+                    <option value="<%= i%>"><%= i%></option>
+                    <%}%></select
+                >일
+            </div>
+            <div>
+                관심사
+                <label> <input type="checkbox" value="journey" name="interest" />여행</label>
+                <label> <input type="checkbox" value="fashion" name="interest" />패션</label>
+                <label> <input type="checkbox" value="food" name="interest" />음식</label>
+            </div>
+            <button>회원가입</button>
+        </form>
+    </body>
+</html>
