@@ -20,8 +20,11 @@ app.get('/', (req, res) => {
 
 app.get('/getForm', (req, res) => {
     console.log(req.query);
-
     res.render('result', { title: 'GET', userInfo: req.query });
+});
+
+app.get('/practice', (req, res) => {
+    res.render('practice');
 });
 
 app.get('/get', (req, res) => {
@@ -32,4 +35,9 @@ app.get('/get', (req, res) => {
 app.post('/postForm', (req, res) => {
     console.log(req.body);
     res.render('result', { title: 'POST', userInfo: req.body });
+});
+
+app.post('/practiceResult', (req, res) => {
+    console.log(req.body);
+    res.render('practiceResult', { title: 'POST', userInfo: req.body });
 });

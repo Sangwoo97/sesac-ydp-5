@@ -3,23 +3,39 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
         <title>폼</title>
     </head>
     <body>
-        <!-- <h1><%= title%></h1>
+        <h1><%= title%></h1>
         <h2>GET 요청</h2>
         <form action="/getForm" method="get">
-            <input type="text" placeholder="ID" name="id" />
-            <input type="text" placeholder="PW" name="pw" />
+            <input type="text" placeholder="ID 최소 3글자" name="id" required minlength="3" />
+            <input type="text" placeholder="PW 최소 4글자" name="pw" required minlength="4" />
+            <input type="email" placeholder="EMAIL" required name="email" />
+            <input type="number" placeholder="GRADE" name="grade" />
             <button>제출</button>
         </form>
         <h2>POST 요청</h2>
         <form action="/postForm" method="post">
-            <input type="text" placeholder="ID" name="id" />
-            <input type="text" placeholder="PW" name="pw" />
+            <input
+                type="text"
+                placeholder="ID"
+                name="id"
+                pattern="^([a-zA-Z0-9가-힣]){4,}$"
+                title="아이디는 대소문자, 한글, 숫자로 구성된 4자 이상의 문자여야합니다"
+            />
+            <input
+                type="text"
+                placeholder="PW"
+                name="pw"
+                pattern="^([a-z0-9]){8,12}$"
+                title="비밀번호는 영어소문자와 숫자로 구성괸 8자리 이상 12자리 이하의 문자여야합니다"
+            />
             <button>제출</button>
-        </form> -->
-        <form action="/get" method="get">
+        </form>
+        <a href="./practice">practice</a>
+        <!-- <form action="/get" method="get">
             이름<input type="text" name="name" />
             <div>
                 성별
@@ -51,6 +67,6 @@
                 <label> <input type="checkbox" value="food" name="interest" />음식</label>
             </div>
             <button>회원가입</button>
-        </form>
+        </form> -->
     </body>
 </html>
