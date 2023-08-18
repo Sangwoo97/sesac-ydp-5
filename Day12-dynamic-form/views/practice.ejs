@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script
+            src="https://code.jquery.com/jquery-3.7.0.min.js"
+            integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g="
+            crossorigin="anonymous"
+        ></script>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <title>Document</title>
+    </head>
+    <body>
+        <form action="" name="register">
+            <label for="username">이름</label>
+            <!-- <input type="text" name="username" id="username" required /> -->
+            <input type="text" name="username" id="username" required />
+            <br />
+
+            <fieldset>
+                <!-- radio button rquired: https://stackoverflow.com/questions/8287779/how-to-use-the-required-attribute-with-a-radio-input-field -->
+                <legend>성별</legend>
+                <!-- <input type="radio" name="gender" id="male" value="male" required /> -->
+                <input type="radio" name="gender" id="male" value="male" required />
+                <label for="male">남자</label>
+                <input type="radio" name="gender" id="female" value="female" required />
+                <label for="female">여자</label>
+            </fieldset>
+            <br />
+
+            <fieldset>
+                <div>
+                    생년월일
+                    <select name="year" id="y">
+                        <%for(let i = 1980; i < 2024; i++){%>
+                        <option value="<%= i%>"><%= i%></option>
+                        <%}%></select
+                    >년
+                    <select name="month" id="m">
+                        <%for(let i = 1; i < 13; i++){%>
+                        <option value="<%= i%>"><%= i%></option>
+                        <%}%></select
+                    >월
+                    <select name="day" id="d">
+                        <%for(let i = 1; i < 31; i++){%>
+                        <option value="<%= i%>"><%= i%></option>
+                        <%}%></select
+                    >일
+                </div>
+            </fieldset>
+            <br />
+
+            <fieldset>
+                <legend>관심사</legend>
+                <input type="checkbox" name="hobby" id="travle" value="여행" />
+                <label for="travle">여행</label>
+                <input type="checkbox" name="hobby" id="fashion" value="패션" />
+                <label for="fashion">패션</label>
+                <input type="checkbox" name="hobby" id="food" value="음식" />
+                <label for="food">음식</label>
+            </fieldset>
+            <!-- 참고! there is no HTML5 validation for a group of checkboxes. You will have to do the validation using Javascript. -->
+            <br />
+
+            <fieldset>
+                <legend>기타</legend>
+                <label for="my-color">좋아하는 색상</label>
+                <input type="color" name="myColor" id="my-color" />
+                <br />
+                <label for="my-number">좋아하는 숫자</label>
+                <input type="number" name="myNumber" id="my-number" />
+                <br />
+                <label for="interest">수업의 관심도</label>
+                <input type="range" name="interest" id="interest" />
+                <br />
+                <label for="time">좋아하는 시간</label>
+                <input type="time" name="time" id="time" />
+            </fieldset>
+            <br />
+
+            <button type="button" onclick="regi();">회원가입</button>
+            <div class="warning"></div>
+        </form>
+        <hr />
+        <div>
+            아이디
+            <input type="text" id="id" />
+            패스워드
+            <input type="text" id="pw" />
+            <button type="button" onclick="login();">로그인</button>
+            <div class="warning2"></div>
+        </div>
+
+        <script>
+            const regi = async () => {
+                const name = document.querySelector('#username').value;
+                if (name) {
+                    $('.warning').text('');
+                    const form = document.forms['register'];
+                    const data = {
+                        name: form.username.value,
+                        gender: form.gender.value,
+                        birth: form.year.value + form.month.value + form.day.value,
+                        hobby: form.hobby.value,
+                        myColor: form.myColor.value,
+                        myNumber: form.myNumber.value,
+                        interest: form.interest.value,
+                        time: form.time.value,
+                    };
+                    try {
+                        let res = await axios({
+                            method: 'get',
+                            url: '/axios',
+                            params: data,
+                        });
+                        const { name, gender, birth, hobby, myColor, myNumber, interest, time } = res.data;
+                        const result = document.querySelector('.warning');
+                        result.style.color = 'blue';
+                        result.textContent = `GET완료 받은값: ${name}, ${gender}, ${birth}, ${hobby}, ${myColor}, ${myNumber}, ${interest}, ${time}입니다.`;
+                    } catch (error) {
+                        console.log(error);
+                    }
+                } else {
+                    const result = document.querySelector('.warning');
+                    result.style.color = 'red';
+                    $('.warning').text('이름은 필수값 입니다.');
+                }
+            };
+
+            const login = async () => {
+                const id = $('#id').val();
+                const pw = $('#pw').val();
+                if (id && pw) {
+                    let res = await axios({
+                        method: 'post',
+                        url: '/prac',
+                        data: { id, pw },
+                    });
+                    if (res.data.error) {
+                        $('.warning2').css({ color: 'red' });
+                        $('.warning2').text(res.data.error);
+                    } else {
+                        $('.warning2').css({ color: 'blue' });
+                        $('.warning2').text(res.data.result);
+                    }
+                } else {
+                    $('.warning2').css({ color: 'red' });
+                    $('.warning2').text('아이디와 패스워드 모두 입력 바랍니다.');
+                }
+            };
+        </script>
+    </body>
+</html>

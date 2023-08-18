@@ -8,6 +8,7 @@
             integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g="
             crossorigin="anonymous"
         ></script>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
         <title>동적 폼 전송</title>
     </head>
     <body>
@@ -25,9 +26,21 @@
             <br />
             <button type="button" onclick="ajaxGet();">Ajax Get 제출</button>
             <button type="button" onclick="ajaxPost();">Ajax Post 제출</button>
+            <br />
+            <button type="button" onclick="axiosGet();">Axios Get 제출</button>
+            <button type="button" onclick="axiosPost();">Axios Post 제출</button>
+            <br />
+            <button type="button" onclick="fetchGet();">Fetch Get 제출</button>
+            <button type="button" onclick="fetchPost();">Fetch Post 제출</button>
         </form>
 
         <div class="result"></div>
+
+        <hr />
+        <h1>OPEN API를 사용하여 고양이 사진 랜덤 올리기</h1>
+        <button onclick="changeImg()">랜덤</button>
+        <br />
+        <img src="https://w7.pngwing.com/pngs/633/239/png-transparent-mario-mario.png" width="500px" alt="고먐미" />
         <script>
             const ajaxGet = () => {
                 console.log('ajaxGet 함수 호출');
@@ -72,6 +85,95 @@
                         result.textContent = `POST완료 받은값: ${data.name}, ${data.gender}입니다.`;
                     },
                 });
+            };
+
+            const axiosGet = async () => {
+                const form = document.forms['register'];
+                const data = {
+                    name: form.name.value,
+                    gender: form.gender.value,
+                };
+                try {
+                    let res = await axios({
+                        method: 'get',
+                        url: '/axios',
+                        params: data,
+                    });
+                    const { name, gender } = res.data;
+                    const result = document.querySelector('.result');
+                    result.style.color = 'blue';
+                    result.textContent = `GET완료 받은값: ${name}, ${gender}입니다.`;
+                } catch (error) {
+                    console.log(error);
+                }
+            };
+
+            const axiosPost = async () => {
+                const form = document.forms['register'];
+                const data = {
+                    name: form.name.value,
+                    gender: form.gender.value,
+                };
+                try {
+                    let res = await axios({
+                        method: 'post',
+                        url: '/axios',
+                        data,
+                    });
+                    const { name, gender } = res.data;
+                    const result = document.querySelector('.result');
+                    result.style.color = 'blue';
+                    result.textContent = `POST완료 받은값: ${name}, ${gender}입니다.`;
+                } catch (error) {
+                    console.log(error);
+                }
+            };
+
+            const fetchGet = () => {
+                console.log('fetchGet 함수 호출');
+                const form = document.forms['register'];
+                const data = {
+                    name: form.name.value,
+                    gender: form.gender.value,
+                };
+                fetch(`/fetch?name=${form.name.value}&gender=${form.gender.value}`, { method: 'get' })
+                    .then((res) => {
+                        console.log(res);
+                        return res.json();
+                    })
+                    .then((data) => {
+                        console.log(data);
+                    });
+            };
+
+            const fetchPost = () => {
+                console.log('fetchPost 함수 호출');
+                const form = document.forms['register'];
+                const data = {
+                    name: form.name.value,
+                    gender: form.gender.value,
+                };
+                fetch('/fetch', {
+                    method: 'POST',
+                    header: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data),
+                })
+                    .then((res) => {
+                        console.log(res);
+                        return res.json();
+                    })
+                    .then((data) => {
+                        console.log(data);
+                    });
+            };
+
+            const changeImg = async () => {
+                try {
+                    let res = await axios({ method: 'get', url: 'https://api.thecatapi.com/v1/images/search' });
+                    const { url } = res.data[0];
+                    const img = document.querySelector('img');
+                    img.setAttribute('src', url);
+                } catch (error) {}
             };
         </script>
     </body>

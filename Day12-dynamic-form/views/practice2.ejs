@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script
+            src="https://code.jquery.com/jquery-3.7.0.min.js"
+            integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g="
+            crossorigin="anonymous"
+        ></script>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <title>Movie Search</title>
+    </head>
+    <body>
+        <h1 style="color: red">!!!!!!WARNING!!!!!! 영어로 검색하세요</h1>
+        <div>
+            영화이름
+            <input type="text" placeholder="영어로 입력" id="name" value="iron" />
+            <br />
+            연도(공백 가능)
+            <input type="text" id="year" />
+            <br />
+            <button type="button" onclick="search();">검색</button>
+        </div>
+
+        <div class="movie" style="visibility: hidden; display: flex; align-items: center; flex-direction: column">
+            <img src="" alt="영화 포스터" class="poster" />
+            <h2 class="mName"></h2>
+        </div>
+
+        <script>
+            const search = async () => {
+                const name = document.querySelector('#name').value;
+                if (name) {
+                    try {
+                        let res = await axios({
+                            method: 'get',
+                            url: 'http://www.omdbapi.com/',
+                            params: {
+                                apiKey: '1d463ca0',
+                                t: name,
+                                y: document.querySelector('#year').value,
+                            },
+                        });
+                        console.log(res.data);
+                        $('.movie').css('visibility', 'visible');
+                        $('.poster').attr('src', res.data.Poster);
+                        $('.mName').text(res.data.Title);
+                    } catch (error) {
+                        console.log(error);
+                    }
+                } else {
+                    alert('영화 이름 입력 바랍니다.');
+                }
+            };
+        </script>
+    </body>
+</html>
