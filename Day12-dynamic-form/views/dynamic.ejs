@@ -15,11 +15,11 @@
         <h1>동적 폼 전송 연습하기</h1>
         <form name="register" action="">
             <label for="name">이름</label>
-            <input type="text" id="name" name="name" value="새싹" />
+            <input type="text" id="name" name="name" value="새싹" required />
             <br />
 
             성별
-            <input type="radio" name="gender" value="m" id="male" checked />
+            <input type="radio" name="gender" value="m" id="male" required />
             <label for="male">남</label>
             <input type="radio" name="gender" value="f" id="female" />
             <label for="female">여</label>
@@ -93,16 +93,24 @@
                     name: form.name.value,
                     gender: form.gender.value,
                 };
+                const result = document.querySelector('.result');
                 try {
-                    let res = await axios({
-                        method: 'get',
-                        url: '/axios',
-                        params: data,
-                    });
-                    const { name, gender } = res.data;
-                    const result = document.querySelector('.result');
-                    result.style.color = 'blue';
-                    result.textContent = `GET완료 받은값: ${name}, ${gender}입니다.`;
+                    if (!form.name.checkValidity()) {
+                        result.style.color = 'red';
+                        result.textContent = '이름을 입력해주세요 !';
+                    } else if (!form.gender[0].checkValidity()) {
+                        result.style.color = 'red';
+                        result.textContent = '성별을 선택해주세요 !';
+                    } else {
+                        let res = await axios({
+                            method: 'get',
+                            url: '/axios',
+                            params: data,
+                        });
+                        const { name, gender } = res.data;
+                        result.style.color = 'blue';
+                        result.textContent = `GET완료 받은값: ${name}, ${gender}입니다.`;
+                    }
                 } catch (error) {
                     console.log(error);
                 }

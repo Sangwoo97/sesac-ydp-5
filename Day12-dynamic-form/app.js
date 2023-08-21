@@ -13,7 +13,7 @@ app.listen(PORT, () => {
 });
 
 app.get('/', (req, res) => {
-    res.render('practice2');
+    res.render('dynamic');
 });
 
 app.get('/ajax', (req, res) => {

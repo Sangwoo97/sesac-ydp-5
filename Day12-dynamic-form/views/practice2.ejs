@@ -32,6 +32,7 @@
             const search = async () => {
                 const name = document.querySelector('#name').value;
                 if (name) {
+                    $('.movie').css('visibility', 'hidden');
                     try {
                         let res = await axios({
                             method: 'get',
@@ -43,9 +44,13 @@
                             },
                         });
                         console.log(res.data);
-                        $('.movie').css('visibility', 'visible');
-                        $('.poster').attr('src', res.data.Poster);
-                        $('.mName').text(res.data.Title);
+                        if (res.data.Error) {
+                            alert(res.data.Error);
+                        } else {
+                            $('.poster').attr('src', res.data.Poster);
+                            $('.mName').text(res.data.Title);
+                            $('.movie').css('visibility', 'visible');
+                        }
                     } catch (error) {
                         console.log(error);
                     }
