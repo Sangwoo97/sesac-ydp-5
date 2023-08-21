@@ -3,14 +3,67 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
         <title>Document</title>
     </head>
     <body>
         <h1>파일 업로드</h1>
+
+        <h2>single file upload</h2>
         <form action="/upload" method="post" enctype="multipart/form-data">
             <input type="file" name="userFile" /><br />
             <input type="text" name="title" /><br /><br />
             <button type="submit">업로드</button>
         </form>
+
+        <h2>Multi file upload v1</h2>
+        <p>하나의 인풋에 여러 개의 파일을 업로드</p>
+        <form action="/upload/array" method="post" enctype="multipart/form-data">
+            <input type="file" name="userFiles" multiple /><br />
+            <input type="text" name="title" /><br /><br />
+            <button type="submit">업로드</button>
+        </form>
+
+        <h2>Multi file upload v2</h2>
+        <p>여러 인풋에 각각의 파일을 업로드</p>
+        <form action="/upload/fields" method="post" enctype="multipart/form-data">
+            <input type="file" name="userFile1" /><br />
+            <input type="text" name="title1" /><br /><br />
+            <input type="file" name="userFile2" /><br />
+            <input type="text" name="title2" /><br /><br />
+            <button type="submit">업로드</button>
+        </form>
+
+        <h2>동적 파일 업로드</h2>
+        <input type="file" name="dynamicUserFile" id="dynamic-file" /><br />
+        <button type="button" onclick="fileUpload()">업로드</button>
+        <br />
+        <img src="" alt="" width="200" />
+        <script>
+            const fileUpload = () => {
+                console.log('동적 파일 업로드');
+                const formData = new FormData();
+                const file = document.querySelector('#dynamic-file');
+                console.dir(file.files);
+                console.dir(file.files[0]);
+
+                formData.append('dynamicUserFile', file.files[0]);
+                console.log(formData);
+                axios({
+                    method: 'post',
+                    url: '/dynamicFile',
+                    data: formData,
+                    header: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                }).then((res) => {
+                    console.log(res);
+                    const {
+                        data: { path },
+                    } = res;
+                    document.querySelector('img').src = '/' + path;
+                });
+            };
+        </script>
     </body>
 </html>
