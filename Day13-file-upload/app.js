@@ -30,10 +30,14 @@ app.listen(PORT, () => {
 });
 
 app.get('/', (req, res) => {
-    res.render('index');
+    res.render('practice');
 });
 
-app.post('/upload', uploadDetail.single('userFile'), (req, res) => {
+app.post('/upload', uploadDetail.single('profile'), (req, res) => {
+    res.send('파일 업로드 완료!');
+});
+
+app.post('/result', uploadDetail.single('userFile'), (req, res) => {
     console.log(req.file);
     console.log(req.body);
     res.send('파일 업로드 완료!');

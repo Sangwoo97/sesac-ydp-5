@@ -85,17 +85,17 @@
         <hr />
         <div>
             아이디
-            <input type="text" id="id" />
+            <input type="text" id="id" required />
             패스워드
-            <input type="text" id="pw" />
+            <input type="text" id="pw" required />
             <button type="button" onclick="login();">로그인</button>
             <div class="warning2"></div>
         </div>
 
         <script>
             const regi = async () => {
-                const name = document.querySelector('#username').value;
-                if (name) {
+                const name = document.querySelector('#username');
+                if (name.checkValidity()) {
                     $('.warning').text('');
                     const form = document.forms['register'];
                     const data = {
@@ -129,9 +129,9 @@
             };
 
             const login = async () => {
-                const id = $('#id').val();
-                const pw = $('#pw').val();
-                if (id && pw) {
+                const id = document.querySelector('#id');
+                const pw = document.querySelector('#pw');
+                if (id.checkValidity() && pw.checkValidity()) {
                     let res = await axios({
                         method: 'post',
                         url: '/prac',
