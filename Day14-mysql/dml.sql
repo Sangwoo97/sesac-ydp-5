@@ -28,6 +28,41 @@ create table orders (
     foreign key (custid) references customer(custid) on update cascade on delete cascade
 );
 
+create table member (
+	id varchar(20) primary key,
+    name varchar(5) not null,
+    age int,
+    gender varchar(2) not null,
+    email varchar(50),
+    promotion varchar(2)
+);
+
+desc member;
+
+alter table member modify id varchar(10);
+alter table member drop age;
+alter table member add interest varchar(100);
+
+create table user (
+	id varchar (10) not null primary key,
+    pw varchar(20) not null,
+    name varchar(5) not null,
+    gender enum('F','M','') default '',
+    birthday date not null,
+    age int(3) not null default 0
+);
+
+desc user;
+
+insert into user values
+	('hong1234', '8o4bkg', '홍길동', 'M', '1990-01-31', 33),
+	('sexysung', '87awjkdf', '성춘향', 'F', '1992-03-31', 31),
+	('power70', 'qxur8sda', '변사또', 'M', '1970-05-02', 53),
+	('hanjo', 'jk48fn4', '한조', 'M', '1994-01-31', 33),
+	('widowmaker', '38ewifh3', '위도우', 'F', '1976-06-27', 47),
+	('dvadva', 'k3f3ah', '송하나', 'F', '2001-06-03', 22),
+	('jungkrat', '4ifha7f', '정크랫', 'M', '1999-11-11', 24);
+
 -- INSERT 추가
 insert into customer (custid, custname, addr, phone, birth) 
 	values ('lucky', '강해원', '미국 뉴욕', '01022223333', '2002-03-05');
@@ -206,6 +241,96 @@ select sum(amount) as 'total_amount' from orders;
 select sum(amount) as 'total_amount', avg(amount) as 'avg_amount', min(price) as 'min_price', max(price) as 'max_price' from orders;
     
 -- 주문 테이블에서 총 주문 건수 (= 튜플 개수)
+select count(*) from orders;
+
+-- 주문 테이블에서 주문한 고객 수 (중복 없이)
+select count(distinct custid) from orders;
+
+-- <GROUP BY >
+-- "~별로"
+-- 고객별로 주문한 주문 건수 구하기
+select custid, count(*) from orders group by custid;
+
+-- 고객별로 주문한 상품 총 수량 구하기
+select custid, sum(amount) from orders group by custid;
+
+-- 고객별로 주문한 총 주문액 구하기
+select custid, sum(price * amount) from orders group by custid;
+
+-- 상품별 판매 개수
+select prodname, sum(amount) from orders group by prodname;
+
+-- < HAVING >
+-- group by 절 이후 추가조건
+-- 총 주문액이 10000원 이상인 고객에 대해서 고객별로 주문한 상품 총 수량 구하기
+select custid, sum(amount), sum(price * amount) from orders group by custid having sum(price * amount) >= 10000;
+
+-- group by 주의사항
+-- select 절에서 group by에서 사용한 속성과 집계함수만 사용가능
+-- 고객별로 주문한 주문 건수 구하기
+select custid, count(*) from orders group by custid;
+
+-- < 실습 > 
+-- departments와 employees 테이블을 생성하고 데이터를 입력해주세요.
+-- 아래 문항에 맞는 SELECT 문을 작성해주세요. 
+CREATE TABLE departments (
+  id INT PRIMARY KEY,
+  name VARCHAR(50),
+  location VARCHAR(50)
+);
+DESC departments;
+
+CREATE TABLE employees (
+  id INT PRIMARY KEY,
+  name VARCHAR(50),
+  age INT,
+  department_id INT,
+  FOREIGN KEY (department_id) REFERENCES departments(id)
+);
+DESC employees;
+
+INSERT INTO departments (id, name, location)
+VALUES
+  (1, 'Sales', 'New York'),
+  (2, 'Marketing', 'San Francisco'),
+  (3, 'Engineering', 'Seattle');
+
+INSERT INTO employees (id, name, age, department_id)
+VALUES
+  (1, 'John Doe', 25, 1),
+  (2, 'Jane Smith', 30, 1),
+  (3, 'Bob Johnson', 40, 2),
+  (4, 'Alice Lee', 35, 3),
+  (5, 'Tom Wilson', 28, 3);
+  
+SELECT * from departments;
+SELECT * from employees;
+
+-- < 풀이 > 
+-- 1. 모든 직원을 직원 테이블에 나열합니다.
+select name from employees;
+-- 2. 나이순으로 직원 테이블에 있는 모든 직원을 나이순(내림차순)으로 나열합니다.
+select name, age from employees order by age desc;
+-- 3. 직원 테이블에 30세 이상인 직원의 이름과 나이를 나열합니다.
+select name, age from employees where age >= 30;
+-- 4. 영업부에서 근무하는 직원의 이름과 부서 ID를 직원 표에 나열합니다.
+select name, department_id from employees where department_id = (select id from departments where name = 'Sales');
+-- 5. 엔지니어링 부서에 근무하고 30세 미만인 직원의 이름과 나이를 직원 테이블에 나열합니다.
+select name, age from employees where department_id = (select id from departments where name = 'Engineering') and age < 30;
+-- 6. 직원 테이블에서 직원 수를 계산합니다.
+select count(name) from employees;
+-- 7. 직원 테이블에서 각 부서의 직원 수를 계산합니다.
+select department_id, count(name) from employees group by department_id;
+-- 8. 직원 평균 나이를 계산합니다.
+select avg(age) from employees;
+-- 9. 부서별 평균 나이를 계산합니다.
+select department_id, avg(age) from employees group by department_id;
+-- 10. 부서 테이블에서 지역 컬럼의 두번째 글자가 e인 부서를 계산합니다.
+select name from departments where location like '_e%';
+-- 11. 부서 테이블에서 지역 컬럼에 공백이 들어가는 부서를 계산합니다.
+select name from departments where location like '% %';
+-- 12. 직원 테이블에서 이름 컬럼에서 마지막 글자가 n인 사원을 계산합니다.
+select name from employees where name like '%_n';
 
 
--- 주문 테이블에서 주문한 고객 수 
+
