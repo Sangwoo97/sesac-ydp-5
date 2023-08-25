@@ -173,3 +173,39 @@ select * from customer where addr like '대한민국%' and birth >= '2000-01-01'
 select * from customer where addr like '미국%' or  addr like '영국%';
 -- 휴대폰 번호 마지막 자리가 4가 아닌 고객 검색
 select * from customer where phone NOT like '%_4';
+
+-- < ORDER BY >
+-- order by 없음: pk기준 오름차순 정렬
+select * from customer order by custname;
+
+select * from customer order by custname desc;
+
+-- where 절과 order by 함께 사용 (단, 이 때 order by가 where 보다 뒤에 위치해야함)
+-- 2000년생 이후 출생자 중에서 주소를 기준으로 내림차순 검색 그리고 아이디를 기준으로 내림차순 검색
+select * from customer where birth >= '2000-01-01' order by addr desc, custid desc;
+-- 2000년생 이후 출생자 중에서 주소를 기준으로 오름차순 검색 그리고 아이디를 기준으로 내림차순 검색
+select * from customer where birth >= '2000-01-01' order by addr, custid desc;
+
+-- < LIMIT >
+-- 행의 개수를 제한
+select * from customer where birth >= '2000-01-01' limit 2;
+select * from customer limit 3;
+
+-- < 집계 함수 >
+-- 계산하여 어떤 값을 리턴하는 "함수"
+-- gtoup by 절과 함꼐 쓰이는 케이스가 많음
+
+-- 주문 테이블에서 총 판매 개수 검색
+select sum(amount) from orders;
+
+-- 주문 테이블에서 총 판매 개수 검색 + 의미있는 열이름으로 변경 (total_sales)
+select sum(amount) as 'total_amount' from orders;
+
+-- 주문 테이블에서 총 판매 개수, 평균 판매 개수, 상품 최저가, 상품 최고가 검색
+-- avg_amount, min_price, max_price
+select sum(amount) as 'total_amount', avg(amount) as 'avg_amount', min(price) as 'min_price', max(price) as 'max_price' from orders;
+    
+-- 주문 테이블에서 총 주문 건수 (= 튜플 개수)
+
+
+-- 주문 테이블에서 주문한 고객 수 
