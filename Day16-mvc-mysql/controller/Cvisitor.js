@@ -17,3 +17,10 @@ exports.postVisitor = (req, res) => {
         res.send({ id: insertId, name: req.body.name, comment: req.body.comment });
     });
 };
+
+exports.deleteVisitor = (req, res) => {
+    const { id } = req.body;
+    Visitor.deleteVisitor(id, (result) => {
+        res.send(result);
+    });
+};
