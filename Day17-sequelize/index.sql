@@ -26,3 +26,4 @@ show databases;
 select * from mysql.user;
 -- 참고) 계정 비번 변경
 ALTER USER 'user'@'%' IDENTIFIED WITH mysql_native_password BY '1234';
+
