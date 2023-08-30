@@ -11,6 +11,12 @@ exports.getVisitors = (req, res) => {
     });
 };
 
+exports.updateVisitor = (req, res) => {
+    Visitor.updateVisitor(req.body, () => {
+        res.send({ isUpdated: true });
+    });
+};
+
 exports.postVisitor = (req, res) => {
     Visitor.postVisitor(req.body, (insertId) => {
         console.log('controller >> ', insertId);
@@ -21,6 +27,15 @@ exports.postVisitor = (req, res) => {
 exports.deleteVisitor = (req, res) => {
     const { id } = req.body;
     Visitor.deleteVisitor(id, (result) => {
+        res.send(result);
+    });
+};
+
+exports.getVisitor = (req, res) => {
+    console.log(req.params);
+    const { id } = req.params;
+    Visitor.getVisitor(id, (result) => {
+        console.log(result);
         res.send(result);
     });
 };

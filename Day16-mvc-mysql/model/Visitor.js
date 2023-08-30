@@ -12,7 +12,26 @@ exports.getVisitors = (cb) => {
         if (err) {
             throw err;
         }
-        console.log('mode >> ', rows);
+        cb(rows);
+    });
+};
+
+exports.getVisitor = (id, cb) => {
+    conn.query(`SELECT * FROM visitor where id = ${id}`, (err, rows) => {
+        if (err) {
+            throw err;
+        }
+        cb(rows[0]);
+    });
+};
+
+exports.updateVisitor = (updateData, cb) => {
+    const { name, comment, id } = updateData;
+    const sql = `update visitor set name='${name}', comment='${comment}' where id=${id}`;
+    conn.query(sql, (err, rows) => {
+        if (err) {
+            throw err;
+        }
         cb(rows);
     });
 };
@@ -23,5 +42,14 @@ exports.deleteVisitor = (id, cb) => {
             throw err;
         }
         cb(true);
+    });
+};
+
+exports.postVisitor = (data, cb) => {
+    conn.query(`INSERT INTO visitor (name, comment) VALUES("${data.name}", "${data.comment}")`, (err, rows) => {
+        if (err) {
+            throw err;
+        }
+        cb(rows.insertId);
     });
 };

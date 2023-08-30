@@ -10,6 +10,7 @@ CREATE TABLE visitor (
   comment MEDIUMTEXT
 );
 desc visitor;
+drop table visitor;
 INSERT INTO visitor (name, comment) VALUES("홍길동", "내가 왔다.");
 INSERT INTO visitor (name, comment) VALUES("이찬혁", "으라차차");
 INSERT INTO visitor (name, comment) VALUES("이수현", "안녕");
