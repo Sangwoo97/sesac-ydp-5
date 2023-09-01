@@ -19,7 +19,7 @@ db.Sequelize = Sequelize;
 
 //  !! models/ 폴더에 정의되는 model(테이블)은 db 객체에 저장
 // db = {sequelize: sequelize, Sequelize: Sequelize, Visitor: 모델(테이블)}
-db.Visitor = require('./User')(sequelize, Sequelize);
+db.User = require('./User')(sequelize, Sequelize);
 
 // db 객체 내보냄 (모듈화 내보냄. 다른 곳에서 db 객체 사용 가능)
 module.exports = db;

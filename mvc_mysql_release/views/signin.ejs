@@ -37,7 +37,7 @@
                     },
                 }).then((res) => {
                     console.log(res.data);
-                    if (res.data.length > 0) {
+                    if (res.data) {
                         alert('로그인 성공');
                         const form_info = document.forms['form_info'];
                         form_info.userid.value = form.userid.value;
