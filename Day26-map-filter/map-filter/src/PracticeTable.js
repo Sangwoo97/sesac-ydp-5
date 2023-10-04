@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 
 const PracticeTable = () => {
   const [name, setName] = useState('');
@@ -7,14 +7,17 @@ const PracticeTable = () => {
   const [search, setSearch] = useState('');
   const [list, setList] = useState([]);
   const [searchedList, setSearchedList] = useState();
+  const ref1 = useRef();
+  const ref2 = useRef();
 
   return (
     <div>
       <div>
         {'작성자 : '}
-        <input type='text' placeholder='작성자' value={name} onChange={(e) => setName(e.target.value)} />
+        <input ref={ref1} type='text' placeholder='작성자' value={name} onChange={(e) => setName(e.target.value)} />
         {'  제목 : '}
         <input
+          ref={ref2}
           type='text'
           placeholder='제목'
           value={title}
@@ -24,16 +27,28 @@ const PracticeTable = () => {
               return;
             }
             if (e.code === 'Enter') {
-              setSearchedList();
-              setList([...list, { id: list.length + 1, name, title }]);
+              if (!name || name.length === 0) {
+                ref1.current.focus();
+              } else if (!title || title.length === 0) {
+                ref2.current.focus();
+              } else {
+                setSearchedList();
+                setList([...list, { id: list.length + 1, name, title }]);
+              }
             }
           }}
         />
         <button
           style={{ marginLeft: '10px' }}
           onClick={() => {
-            setSearchedList();
-            setList([...list, { id: list.length + 1, name, title }]);
+            if (!name || name.length === 0) {
+              ref1.current.focus();
+            } else if (!title || title.length === 0) {
+              ref2.current.focus();
+            } else {
+              setSearchedList();
+              setList([...list, { id: list.length + 1, name, title }]);
+            }
           }}
         >
           작성
