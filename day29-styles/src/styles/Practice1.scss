@@ -1,0 +1,64 @@
+.container {
+  display: flex;
+
+  .body {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    border-radius: 999px;
+    background-color: aqua;
+
+    &.c1 {
+      top: 0;
+      left: 0;
+      z-index: 1;
+      background-color: aqua;
+    }
+
+    &.c2 {
+      top: 50px;
+      left: 50px;
+      z-index: 2;
+      background-color: blue;
+    }
+
+    &.c3 {
+      top: 100px;
+      left: 110px;
+      z-index: 3;
+      background-color: skyblue;
+    }
+
+    &.c4 {
+      top: 110px;
+      left: 160px;
+      z-index: 4;
+      background-color: red;
+    }
+
+    &.c5 {
+      top: 130px;
+      left: 230px;
+      z-index: 5;
+      background-color: cornflowerblue;
+    }
+  }
+
+  .eye {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    top: 30px;
+    left: 10px;
+    border-radius: 999px;
+    background-color: white;
+
+    &.eye2 {
+      width: 20px;
+      height: 20px;
+      top: 10px;
+      left: 0px;
+      background-color: black;
+    }
+  }
+}

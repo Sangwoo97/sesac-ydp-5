@@ -1,0 +1,86 @@
+$first-color: pink;
+$second-color: yellow;
+$third-color: green;
+
+// -믹스인(함수) 선언 (정의)
+@mixin move($size) {
+  animation: spin#{$size} infinite 2s linear;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+
+  .circle {
+    width: 50px;
+    height: 50px;
+    border-radius: 999px;
+
+    &.pink {
+      background-color: $first-color;
+      @include move('10');
+    }
+    &.yellow {
+      background-color: $second-color;
+      @include move('20');
+    }
+    &.green {
+      background-color: $third-color;
+      @include move('30');
+    }
+  }
+}
+
+@keyframes spin10 {
+  0% {
+    transform: translate(0px, 0px);
+  }
+  25% {
+    transform: translate(100px, 0px);
+  }
+  50% {
+    transform: translate(50px, 100px);
+  }
+  75% {
+    transform: translate(0px, 100px);
+  }
+  100% {
+    transform: translate(0px, 0px);
+  }
+}
+
+@keyframes spin20 {
+  0% {
+    transform: translate(0px, 0px);
+  }
+  25% {
+    transform: translate(200px, 0px);
+  }
+  50% {
+    transform: translate(200px, 200px);
+  }
+  75% {
+    transform: translate(0px, 200px);
+  }
+  100% {
+    transform: translate(0px, 0px);
+  }
+}
+
+@keyframes spin30 {
+  0% {
+    transform: translate(0px, 0px);
+  }
+  25% {
+    transform: translate(300px, 0px);
+  }
+  50% {
+    transform: translate(300px, 300px);
+  }
+  75% {
+    transform: translate(0px, 300px);
+  }
+  100% {
+    transform: translate(0px, 0px);
+  }
+}

@@ -1,0 +1,23 @@
+/* CSS Module styling */
+.box {
+  width: 100px;
+  height: 100px;
+  border: solid 2px blue;
+}
+
+.container {
+  display: flex;
+  border: solid 2px red;
+}
+
+.red {
+  background-color: red;
+}
+
+.orange {
+  background-color: orange;
+}
+
+.yellow {
+  background-color: yellow;
+}

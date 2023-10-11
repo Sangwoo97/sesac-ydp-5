@@ -1,0 +1,52 @@
+@import './variables';
+// $color-first: red;
+// $animation-duration: 0.4s;
+
+// -믹스인(함수) 선언 (정의)
+@mixin box($size) {
+  width: $size;
+  height: $size;
+}
+
+// 중첩: 부모 자식 표현 가능
+.container {
+  display: flex;
+
+  .box {
+    @include box(150px);
+
+    // &: 부모 선택자 참조해서 치환
+    &.red {
+      background-color: $color-first;
+    }
+    &.orange {
+      background-color: orange;
+    }
+    &.yellow {
+      background-color: yellow;
+    }
+    &:hover {
+      $box-animation: $animation-duration * 2;
+      transform: translateY(-20px);
+      transition: transform $box-animation;
+    }
+  }
+}
+
+.btn {
+  padding: 10px;
+  margin: 10px;
+  border: 1px solid black;
+}
+
+.btn-primary {
+  @extend .btn;
+  background-color: $color-first;
+}
+
+@media (max-width: #{$breakpoint-sm}) {
+  // @media (max-width: 360px)
+  .container {
+    flex-direction: column;
+  }
+}
