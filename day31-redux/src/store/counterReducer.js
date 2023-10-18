@@ -1,3 +1,9 @@
+const PLUS = 'PLUS';
+const MINUS = 'MINUS';
+
+export const plus = () => ({ type: PLUS });
+export const minus = () => ({ type: MINUS });
+
 const initialState = {
   number: 50,
 };
