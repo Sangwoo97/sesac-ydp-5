@@ -1,24 +1,23 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Student } from './components/Students';
+import Card from './components/Card';
+import TodoList from './components/TodoList';
 
 function App() {
+  const handleClick = (name: string, grade: number) => {
+    console.log(`안녕 난 ${name}이고, ${grade}학년이야`);
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='App'>
+      <Student name='새싹' grade={3} handleClick={handleClick} />
+      <br />
+      <Student name='새싹' grade={3} part={'CS'} handleClick={handleClick} />
+      <br />
+      <Card title='오늘 배울것은?'>
+        <h1>TypeScript with React</h1>
+      </Card>
+      <br />
+      <TodoList />
     </div>
   );
 }
