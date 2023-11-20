@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>socket.io 채팅</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <link rel="stylesheet" href="views/chat.css" />
+  </head>
+  <body>
+    <h1>🖐즐거운 채팅🖐</h1>
+    <div class="nickContainer">
+      <input
+        type="text"
+        id="nickname"
+        placeholder="닉네임"
+        autofocus
+        onkeypress="if(window.event.keyCode==13){join()}"
+      />
+      <button class="button-49" id="nicknameBtn" type="button" onclick="join();">입장</button>
+    </div>
+
+    <main>
+      <div class="chat-list"></div>
+      <div class="chat-box" style="position: relative">
+        <!-- 메세지 전송 영역 -->
+        <select id="nick-list"></select
+        >에게
+        <input type="text" id="message" onkeypress="if(window.event.keyCode==13){send()}" />
+        <button type="button" class="button-49" onclick="send();">전송</button>
+      </div>
+    </main>
+
+    <script>
+      let socket = io.connect(); // 소켓 사용을 위한 객체 생성
+      let nickname;
+
+      socket.on('connect', () => {
+        console.log('클라이언트 연결 완료 : ', socket);
+      });
+
+      socket.on('sameNick', (data) => {
+        alert(data);
+      });
+
+      socket.on('entrySuccess', (data) => {
+        nickname = document.querySelector('#nickname').value;
+        document.querySelector('#nickname').disabled = true;
+        document.querySelector('#nicknameBtn').disabled = true;
+        document.querySelector('.chat-box').style.display = 'flex';
+        document.querySelector('.chat-list').classList.add('act');
+      });
+
+      socket.on('notice', (data) => {
+        const list = document.querySelector('.chat-list');
+        list.insertAdjacentHTML(
+          'beforeend',
+          `<div style="margin-bottom: 15px">${data.replaceAll('undefined', '알수없음')}</div>`
+        );
+        scrollUl();
+      });
+
+      socket.on('updateNicks', (users) => {
+        let options = `<option value="all">전체</option>`;
+        for (let user of Object.keys(users)) {
+          if (users[user] !== nickname) {
+            options += `<option value="${user}">${users[user]}</option>`;
+          }
+        }
+        document.querySelector('#nick-list').innerHTML = options;
+      });
+
+      socket.on('newMessage', (data) => {
+        const list = document.querySelector('.chat-list');
+        if (data.nick === nickname) {
+          list.insertAdjacentHTML(
+            'beforeend',
+            `<div class="my-chat">
+                    <div class="my-chat-content">${data.nick} : ${data.content}</div>
+                  </div>`
+          );
+        } else {
+          list.insertAdjacentHTML(
+            'beforeend',
+            `<div class="other-chat">
+                      <div class="other-chat-content">${data.nick} : ${data.content}</div>
+                  </div>`
+          );
+        }
+        document.querySelector('#message').value = '';
+        scrollUl();
+      });
+
+      socket.on('newDirectMessage', (data) => {
+        const list = document.querySelector('.chat-list');
+        if (data.nick === nickname) {
+          list.insertAdjacentHTML(
+            'beforeend',
+            `<div class="my-chat" >
+                <div class="my-chat-content" style="background-color: orange">(속닥속닥) ${data.nick} : ${data.content}</div>
+              </div>`
+          );
+        } else {
+          list.insertAdjacentHTML(
+            'beforeend',
+            `<div class="other-chat" >
+                <div class="other-chat-content" style="background-color: orange">(속닥속닥) ${data.nick} : ${data.content}</div>
+              </div>`
+          );
+        }
+        document.querySelector('#message').value = '';
+        scrollUl();
+      });
+
+      const join = () => {
+        if (document.querySelector('#nickname').value.length > 0) {
+          socket.emit('setNick', document.querySelector('#nickname').value);
+        } else {
+          alert('한 글자이상 작성해주세요');
+        }
+      };
+
+      const send = () => {
+        const content = document.querySelector('#message').value;
+        const dropbox = document.querySelector('#nick-list');
+        const dValue = dropbox.options[dropbox.selectedIndex].value;
+        if (content.length > 0) {
+          if (dValue === 'all') {
+            socket.emit('send', { nick: nickname, content });
+          } else {
+            socket.emit('directSend', { id: dValue, nick: nickname, content });
+          }
+        } else {
+          alert('채팅내용을 입력해주세요!');
+        }
+      };
+
+      function scrollUl() {
+        // 채팅창 form 안의 ul 요소, (ul 요소 안에 채팅 내용들이 li 요소로 입력된다.)
+        let chatUl = document.querySelector('.chat-list');
+        chatUl.scrollTop = chatUl.scrollHeight; // 스크롤의 위치를 최하단으로
+      }
+    </script>
+  </body>
+</html>

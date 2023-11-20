@@ -20,7 +20,7 @@ const App = () => {
       <br />
       {a > b && 'a가 b보다 큽니다.'}
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <div className="test">{title}</div>
+        <div className='test'>{title}</div>
         <div>
           아이디: <input />
           <br />
@@ -29,13 +29,13 @@ const App = () => {
         </div>
       </div>
       <div style={{ display: 'flex' }}>
-        <div className="block red"></div>
-        <div className="block orange"></div>
-        <div className="block yellow"></div>
-        <div className="block green"></div>
-        <div className="block blue"></div>
-        <div className="block navy"></div>
-        <div className="block purple"></div>
+        <div className='block red'></div>
+        <div className='block orange'></div>
+        <div className='block yellow'></div>
+        <div className='block green'></div>
+        <div className='block blue'></div>
+        <div className='block navy'></div>
+        <div className='block purple'></div>
       </div>
     </div>
   );
